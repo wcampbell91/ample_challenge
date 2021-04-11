@@ -8,10 +8,12 @@ const Home = props => {
     const [ search, setSearch ] = useState('')
 
     return(
-        <Container className="stars appContainer">
-            <Container className="twinkling homeContainer">
-                <h1>Star Wars Bio Hut</h1>
-                <Search search={search} setSearch={setSearch}/>
+        <Container className="stars">
+            <Container className="twinkling appContainer">
+                <Container className="homeContainer">
+                    <h1>Star Wars Bio Hut</h1>
+                    <Search search={search} setSearch={setSearch}/>
+                </Container>
             </Container>
         </Container>
     )
