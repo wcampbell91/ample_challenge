@@ -1,5 +1,6 @@
 import React from "react"
 import SearchField from "react-search-field"
+import { Container } from "react-bootstrap"
 import "./Search.css"
 
 const Search = props => {
@@ -13,11 +14,13 @@ const Search = props => {
 
 
     return <>
+    <Container className="searchContainer">
         <SearchField
             placeholder="Search"
             onChange={updateSearch}
             className="searchBar"
         />
+    </Container>
     </>
 }
 
