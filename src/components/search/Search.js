@@ -4,12 +4,13 @@ import { Container } from "react-bootstrap"
 import "./Search.css"
 
 const Search = props => {
-    const { search, setSearch } = props
+    const { search, setSearch, updateSearch } = props
 
 
-    const updateSearch = (value, event) => {
+    const updateInput = (value, event) => {
         event.preventDefault();
         setSearch(value)
+        updateSearch(search)
     }
 
 
@@ -17,7 +18,7 @@ const Search = props => {
     <Container className="searchContainer">
         <SearchField
             placeholder="Search"
-            onChange={updateSearch}
+            onChange={updateInput}
             className="searchBar"
         />
     </Container>
