@@ -15,24 +15,21 @@ const Home = props => {
     useEffect(() => {
         getCharacters()
         .then(characterList => setCharacters(characterList))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const updateSearch = (search) => {
-        const filteredList = characters && characters.filter((character) => character.name.toLowerCase().includes(search.toLowerCase()))
-        setCharacters(filteredList)
-    }
+    const dynamicSearch = () => characters.filter((character) => character.name.toLowerCase().includes(search.toLowerCase()))
 
-    const characterCards = characters.map((character) => <CharacterCard key={character.url} character={character} />)
 
     return(
         <Container className="stars">
             <Container className="twinkling appContainer">
                 <Container className="homeContainer">
                     <h1>Star Wars Bio Hut</h1>
-                    <Search search={search} setSearch={setSearch} updateSearch={updateSearch}/>
+                    <Search search={search} setSearch={setSearch} dynamicSearch={dynamicSearch}/>
                     <Container className="cardContainer">
                         <CardColumns>
-                            {characterCards}
+                            <CharacterCard characters={dynamicSearch()} />
                         </CardColumns>
                     </Container>
                 </Container>
