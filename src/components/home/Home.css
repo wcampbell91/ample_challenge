@@ -5,19 +5,24 @@
     display: grid;
     grid: 
         [row1-start] "header header header" [row1-end]
-        [row2-start] "body body body" [row2-end]
-        [row3-start] "footer footer footer";
+        [row2-start] "body body body" [row2-end];
     place-items: center !important
 }
 
 .homeContainer {
-    grid-area: header / 2 / header / 3;
-    place-self: center !important
+    grid-area: header / 2 / header / 2;
+    /* place-self: center !important */
 }
 
-.cardContainer {
-	grid-area: body / 1 / body / 3;
+.title {
+	margin-left: auto !important;
 }
+
+/* .cardContainer {
+	grid-area: body / 1 / body / 3;
+	display: flex;
+	flex-flow: row wrap
+} */
 
 .stars, .twinkling, .clouds {
 	position:absolute;

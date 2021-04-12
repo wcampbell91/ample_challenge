@@ -1,23 +1,23 @@
-import React from "react"
+import React, { useState } from "react"
 
 export const infoContext = React.createContext()
 
 const InfoProvider = props => {
-    // const [ characters, setCharacters ] = useState({})
-    
-    // const getCharacters = async => {
-    //     const charactersList = []
-    //     return fetch(`https://swapi.py4e.com/api/people/`)
-    //     .then(res => res.json())
-    //     .then(res => {
-    //         res.results.map(result => charactersList.push(result))
-    //         for (let i = 1; i < 10; i++) {
-    //             fetch(`https://swapi.py4e.com/api/people/?page=${i}`)
-    //             res.results.map(result => charactersList.push(result))
-    //         }
-    //         setCharacters(charactersList)
-    //     })
-    // }
+    const [ films, setFilms ] = useState([])
+    const [ ships, setShips ] = useState([])
+
+    const getSingleCharacter = (charId) => {
+        return new Promise((resolve, reject) => fetch(`https://swapi.py4e.com/api/people/${charId}`)
+        .then(res => {
+            res.json().then(res => {
+                const filmList = []
+                res.films.map((film) => {
+                    return fetch(film).then(filmList.push(res))
+                    // Continue to add for starships
+                })
+            })
+        }))
+    }
 
     const getCharacters = (characterList = [], url = "https://swapi.py4e.com/api/people/") => {
         return new Promise((resolve, reject) => fetch(url)
