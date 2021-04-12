@@ -9,22 +9,20 @@ import "./Home.css"
 
 const Home = props => {
     const [ search, setSearch ] = useState('')
-    const [ characterList, setCharacterList ] = useState([])
-    const { characters, getCharacters } = useContext(infoContext)
+    const [ characters, setCharacters ] = useState([])
+    const { getCharacters } = useContext(infoContext)
 
     useEffect(() => {
         getCharacters()
-        characters && setCharacterList(characters)
+        .then(characterList => setCharacters(characterList))
     }, [])
 
     const updateSearch = (search) => {
-        const filteredList = characters && characters.filter((character) => {
-            return character.name.toLowerCase().includes(search.toLowerCase())
-            })
-        setCharacterList(filteredList)
+        const filteredList = characters && characters.filter((character) => character.name.toLowerCase().includes(search.toLowerCase()))
+        setCharacters(filteredList)
     }
 
-    // const characterCards = characterList && characterList.map((character) => <CharacterCard key={character.url} character={character} />)
+    const characterCards = characters.map((character) => <CharacterCard key={character.url} character={character} />)
 
     return(
         <Container className="stars">
@@ -34,7 +32,7 @@ const Home = props => {
                     <Search search={search} setSearch={setSearch} updateSearch={updateSearch}/>
                     <Container className="cardContainer">
                         <CardColumns>
-                            {/* {characterCards} */}
+                            {characterCards}
                         </CardColumns>
                     </Container>
                 </Container>
