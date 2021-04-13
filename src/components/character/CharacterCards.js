@@ -8,7 +8,7 @@ const CharacterCard = props => {
         <Container className="cardContainer">
             <CardColumns>
                 {characters.map(character => {
-                    character.id = (characters.indexOf(character) + 1)
+                    character.id = character.url.split("/")[5]
                     return <Card className="characterCard">
                         <Card.Body>
                             <Card.Title><h1>{character.name}</h1></Card.Title>

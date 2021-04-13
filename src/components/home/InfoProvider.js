@@ -6,20 +6,26 @@ const InfoProvider = props => {
     const [ character, setCharacter ] = useState({})
 
     const getFilmData = (filmUrl) => {
-        return fetch(filmUrl)
+        return new Promise((resolve, reject) => fetch(filmUrl)
         .then(film => film.json())
         .then(film => {
-            return film
-        })
-    }
+            resolve(film)
+        }).catch(reject)
+    )}
 
     const getShipData = (shipUrl) => {
-        return fetch(shipUrl)
+        return new Promise((resolve, reject) => fetch(shipUrl)
         .then(ship => ship.json())
         .then(ship => {
-            return ship
-        })
-    }
+            resolve(ship)
+        }).catch(reject)
+    )}
+
+    const getSpeciesData = (speciesUrl) => {
+        return new Promise((resolve, reject) => fetch(speciesUrl)
+        .then(species => species.json())
+        .then(species => resolve(species)).catch(reject)
+    )}
 
     const getSingleCharacter = (charId) => {
         return new Promise((resolve, reject) => fetch(`https://swapi.py4e.com/api/people/${charId}`)
@@ -39,12 +45,16 @@ const InfoProvider = props => {
                         .then(ship => shipList.push(ship))
                     })
                 }
+                if (res.species) {
+                    getSpeciesData(res.species)
+                    .then(species => res.species = species)
+                }
                 res.films = filmList
                 res.starships = shipList
                 resolve(res)
-            }).catch(reject)
-        }))
-    }
+            }).catch(err => reject(err))
+        })
+    )}
 
     const getCharacters = (characterList = [], url = "https://swapi.py4e.com/api/people/") => {
         return new Promise((resolve, reject) => fetch(url)
