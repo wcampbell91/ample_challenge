@@ -3,19 +3,46 @@ import React, { useState } from "react"
 export const infoContext = React.createContext()
 
 const InfoProvider = props => {
-    const [ films, setFilms ] = useState([])
-    const [ ships, setShips ] = useState([])
+    const [ character, setCharacter ] = useState({})
+
+    const getFilmData = (filmUrl) => {
+        return fetch(filmUrl)
+        .then(film => film.json())
+        .then(film => {
+            return film
+        })
+    }
+
+    const getShipData = (shipUrl) => {
+        return fetch(shipUrl)
+        .then(ship => ship.json())
+        .then(ship => {
+            return ship
+        })
+    }
 
     const getSingleCharacter = (charId) => {
         return new Promise((resolve, reject) => fetch(`https://swapi.py4e.com/api/people/${charId}`)
         .then(res => {
             res.json().then(res => {
                 const filmList = []
-                res.films.map((film) => {
-                    return fetch(film).then(filmList.push(res))
-                    // Continue to add for starships
-                })
-            })
+                if (res.films) {
+                    res.films.map((film) => {
+                        return getFilmData(film)
+                        .then(film => filmList.push(film))
+                    })
+                }
+                const shipList = []
+                if(res.starships) {
+                    res.starships.map((ship) => {
+                        return getShipData(ship)
+                        .then(ship => shipList.push(ship))
+                    })
+                }
+                res.films = filmList
+                res.starships = shipList
+                resolve(res)
+            }).catch(reject)
         }))
     }
 
@@ -58,7 +85,8 @@ const InfoProvider = props => {
 
     return (
         <infoContext.Provider value={{
-            // characters,
+            character,
+            getSingleCharacter,
             getCharacters
         }}>
             {props.children}
