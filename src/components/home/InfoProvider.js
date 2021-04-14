@@ -4,6 +4,9 @@ export const infoContext = React.createContext()
 
 const InfoProvider = props => {
     const [ character, setCharacter ] = useState({})
+    const [ films, setFilms ] = useState([])
+    const [ ships, setShips ] = useState([])
+    const [ species, setSpecies ] = useState({})
 
     const getFilmData = (filmUrl) => {
         return new Promise((resolve, reject) => fetch(filmUrl)
@@ -47,10 +50,10 @@ const InfoProvider = props => {
                 }
                 if (res.species) {
                     getSpeciesData(res.species)
-                    .then(species => res.species = species)
+                    .then(species => setSpecies(species))
                 }
-                res.films = filmList
-                res.starships = shipList
+                setFilms(filmList)
+                setShips(shipList)
                 resolve(res)
             }).catch(err => reject(err))
         })
@@ -97,7 +100,10 @@ const InfoProvider = props => {
         <infoContext.Provider value={{
             character,
             getSingleCharacter,
-            getCharacters
+            getCharacters,
+            films,
+            ships,
+            species
         }}>
             {props.children}
         </infoContext.Provider>

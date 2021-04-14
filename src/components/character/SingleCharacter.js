@@ -4,7 +4,7 @@ import "./SingleCharacter.css"
 import { Container, ListGroup } from "react-bootstrap"
 
 const SingleCharacter = props => {
-    const { getSingleCharacter } = useContext(infoContext)
+    const { getSingleCharacter, films, ships, species } = useContext(infoContext)
     const [character, setCharacter ] = useState({})
     const [ isLoading, setIsLoading ] = useState(false)
 
@@ -19,6 +19,10 @@ const SingleCharacter = props => {
         }
         updateCharacterState(charId)
     }, [])
+
+    const filmList = films.map((film) => <ListGroup.Item>{film.title}</ListGroup.Item>)
+
+    const shipList = ships.map((ship) => <ListGroup.Item>{ship.name}</ListGroup.Item>)
     
 
     return(
@@ -36,13 +40,19 @@ const SingleCharacter = props => {
                             <ListGroup.Item>Weight: {character.mass}</ListGroup.Item>
                             <ListGroup.Item>Hair Color: {character.hair_color} </ListGroup.Item>
                             <ListGroup.Item>DOB: {character.birth_year}</ListGroup.Item>
-                            <ListGroup.Item>Species Info:{character.species && character.species.name}</ListGroup.Item>
+                            <ListGroup.Item>Species Info: {species.name}</ListGroup.Item>
                         </ListGroup>
                     </Container>
                     <Container className="films">
                         <h3>Films</h3>
                         <ListGroup>
-                            {character.films && character.films.map((film) => <ListGroup.Item key={film.title}>{film.title}</ListGroup.Item>)}
+                            {filmList}
+                        </ListGroup>
+                    </Container>
+                    <Container className="starships">
+                        <h3>Starships flown</h3>
+                        <ListGroup>
+                            {shipList}
                         </ListGroup>
                     </Container>
                 </div> 

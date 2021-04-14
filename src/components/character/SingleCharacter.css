@@ -21,6 +21,12 @@
     background-color: transparent;
 }
 
+.starships {
+	grid-area: body / 2 / body / 2;
+	color: black;
+	background-color: transparent;
+}
+
 
 .stars, .twinkling, .clouds {
 	position:absolute;
