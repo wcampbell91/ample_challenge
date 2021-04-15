@@ -1,5 +1,13 @@
+.cardContainer {
+	/* grid-area: body / 1 / body / 3; */
+	display: flex;
+	flex-flow: row wrap
+}
+
 .characterCard {
+    flex: 1 0 25% !important;
     margin-top: 5px;
+    background-color: transparent;
     border: 2px white solid;
     border-radius: 5px
 }

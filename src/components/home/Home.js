@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react"
-import { Container, CardColumns } from "react-bootstrap"
+import { Container } from "react-bootstrap"
 
 import { infoContext } from "./InfoProvider"
 import Search from "../search/Search"
@@ -22,16 +22,12 @@ const Home = props => {
 
 
     return(
-        <Container className="stars">
-            <Container className="twinkling appContainer">
+        <Container fluid className="stars">
+            <Container fluid className="twinkling appContainer">
                 <Container className="homeContainer">
-                    <h1>Star Wars Bio Hut</h1>
-                    <Search search={search} setSearch={setSearch} dynamicSearch={dynamicSearch}/>
-                    <Container className="cardContainer">
-                        <CardColumns>
-                            <CharacterCard characters={dynamicSearch()} />
-                        </CardColumns>
-                    </Container>
+                    <h1 className="title">Star Wars Bio Hut</h1>
+                    <Search className="searchBar" search={search} setSearch={setSearch} dynamicSearch={dynamicSearch}/>
+                    <CharacterCard characters={dynamicSearch()} />
                 </Container>
             </Container>
         </Container>

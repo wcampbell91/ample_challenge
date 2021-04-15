@@ -1,23 +1,63 @@
-import React from "react"
+import React, { useState } from "react"
 
 export const infoContext = React.createContext()
 
 const InfoProvider = props => {
-    // const [ characters, setCharacters ] = useState({})
-    
-    // const getCharacters = async => {
-    //     const charactersList = []
-    //     return fetch(`https://swapi.py4e.com/api/people/`)
-    //     .then(res => res.json())
-    //     .then(res => {
-    //         res.results.map(result => charactersList.push(result))
-    //         for (let i = 1; i < 10; i++) {
-    //             fetch(`https://swapi.py4e.com/api/people/?page=${i}`)
-    //             res.results.map(result => charactersList.push(result))
-    //         }
-    //         setCharacters(charactersList)
-    //     })
-    // }
+    const [ character, setCharacter ] = useState({})
+    const [ films, setFilms ] = useState([])
+    const [ ships, setShips ] = useState([])
+    const [ species, setSpecies ] = useState({})
+
+    const getFilmData = (filmUrl) => {
+        return new Promise((resolve, reject) => fetch(filmUrl)
+        .then(film => film.json())
+        .then(film => {
+            resolve(film)
+        }).catch(reject)
+    )}
+
+    const getShipData = (shipUrl) => {
+        return new Promise((resolve, reject) => fetch(shipUrl)
+        .then(ship => ship.json())
+        .then(ship => {
+            resolve(ship)
+        }).catch(reject)
+    )}
+
+    const getSpeciesData = (speciesUrl) => {
+        return new Promise((resolve, reject) => fetch(speciesUrl)
+        .then(species => species.json())
+        .then(species => resolve(species)).catch(reject)
+    )}
+
+    const getSingleCharacter = (charId) => {
+        return new Promise((resolve, reject) => fetch(`https://swapi.py4e.com/api/people/${charId}`)
+        .then(res => {
+            res.json().then(res => {
+                const filmList = []
+                if (res.films) {
+                    res.films.map((film) => {
+                        return getFilmData(film)
+                        .then(film => filmList.push(film))
+                    })
+                }
+                const shipList = []
+                if(res.starships) {
+                    res.starships.map((ship) => {
+                        return getShipData(ship)
+                        .then(ship => shipList.push(ship))
+                    })
+                }
+                if (res.species) {
+                    getSpeciesData(res.species)
+                    .then(species => setSpecies(species))
+                }
+                setFilms(filmList)
+                setShips(shipList)
+                resolve(res)
+            }).catch(err => reject(err))
+        })
+    )}
 
     const getCharacters = (characterList = [], url = "https://swapi.py4e.com/api/people/") => {
         return new Promise((resolve, reject) => fetch(url)
@@ -58,8 +98,12 @@ const InfoProvider = props => {
 
     return (
         <infoContext.Provider value={{
-            // characters,
-            getCharacters
+            character,
+            getSingleCharacter,
+            getCharacters,
+            films,
+            ships,
+            species
         }}>
             {props.children}
         </infoContext.Provider>

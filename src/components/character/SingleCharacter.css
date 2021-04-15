@@ -1,28 +1,32 @@
-/* @import "susy";
-@import "compass"; */
-
-.appContainer {
+/* .singleCharContainer {
     display: grid;
-    grid: 
-        [row1-start] "header header header" [row1-end]
-        [row2-start] "body body body" [row2-end];
+    grid-template-columns: 33% 33% 33% !important;
+    grid-template-rows: 50px auto 50px; 
     place-items: center !important
-}
+} */
 
-.homeContainer {
+/* .name {
     grid-area: header / 2 / header / 2;
     /* place-self: center !important */
+
+
+.about_me {
+    color: black;
+    background-color: transparent
 }
 
-.title {
-	margin-left: auto !important;
+.films {
+    grid-area: body / 2 / body / 2;
+    color: black;
+    background-color: transparent;
 }
 
-/* .cardContainer {
-	grid-area: body / 1 / body / 3;
-	display: flex;
-	flex-flow: row wrap
-} */
+.starships {
+	grid-area: body / 2 / body / 2;
+	color: black;
+	background-color: transparent;
+}
+
 
 .stars, .twinkling, .clouds {
 	position:absolute;
