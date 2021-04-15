@@ -20,9 +20,9 @@ const SingleCharacter = props => {
         updateCharacterState(charId)
     }, [])
 
-    const filmList = films.map((film) => <ListGroup.Item>{film.title}</ListGroup.Item>)
+    const filmList =films && films.map((film) => <ListGroup.Item>{film.title}</ListGroup.Item>)
 
-    const shipList = ships.map((ship) => <ListGroup.Item>{ship.name}</ListGroup.Item>)
+    const shipList = ships && ships.map((ship) => <ListGroup.Item>{ship.name}</ListGroup.Item>)
     
 
     return(
