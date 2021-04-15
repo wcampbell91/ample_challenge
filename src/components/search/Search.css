@@ -3,7 +3,9 @@
 }
 
 .react-search-field-input {
-    padding: 1px !important
+    padding: 1px !important;
+    color: black !important;
+    font-weight: 800 !important;
 }
 
 .searchContainer {

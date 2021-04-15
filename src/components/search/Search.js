@@ -6,12 +6,10 @@ import "./Search.css"
 const Search = props => {
     const { setSearch } = props
 
-
     const updateInput = (value, event) => {
         event.preventDefault();
         setSearch(value)
     }
-
 
     return <>
     <Container className="searchContainer">

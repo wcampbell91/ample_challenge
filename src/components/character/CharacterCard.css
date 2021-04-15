@@ -1,5 +1,4 @@
 .cardContainer {
-	/* grid-area: body / 1 / body / 3; */
 	display: flex;
 	flex-flow: row wrap
 }

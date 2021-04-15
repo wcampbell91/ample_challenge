@@ -18,6 +18,7 @@ const SingleCharacter = props => {
             setIsLoading(false)
         }
         updateCharacterState(charId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const filmList =films && films.map((film) => <ListGroup.Item>{film.title}</ListGroup.Item>)
@@ -57,7 +58,7 @@ const SingleCharacter = props => {
                     </Container>
                 </div> 
                 }
-        </Container>
+            </Container>
         </Container>
     )
 }

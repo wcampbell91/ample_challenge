@@ -1,9 +1,10 @@
 import React from "react"
-import { Card, CardDeck, Button, Container, CardColumns } from "react-bootstrap"
+import { Card, Button, Container, CardColumns } from "react-bootstrap"
 import "./CharacterCard.css"
 
 const CharacterCard = props => {
     const { characters } = props
+    
     return (
         <Container className="cardContainer">
             <CardColumns>
