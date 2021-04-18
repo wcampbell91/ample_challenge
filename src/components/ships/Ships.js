@@ -13,7 +13,7 @@ const Ships = props => {
 
     return(
             <Container className="ships">
-                <h1>ships</h1>
+                <h3>ships</h3>
                 <ListGroup>
                     {shipItems}
                 </ListGroup>
