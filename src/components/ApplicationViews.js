@@ -4,7 +4,7 @@ import { Route } from "react-router-dom"
 
 import Home from "./home/Home"
 import SingleCharacter from "./character/SingleCharacter"
-import InfoProvider from "./home/InfoProvider"
+import InfoProvider from "./data/InfoProvider"
 
 const ApplicationViews = () => {
     return <>

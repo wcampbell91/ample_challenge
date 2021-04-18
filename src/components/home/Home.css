@@ -1,6 +1,3 @@
-/* @import "susy";
-@import "compass"; */
-
 .appContainer {
     display: grid;
     grid: 
@@ -11,22 +8,18 @@
 
 .homeContainer {
     grid-area: header / 2 / header / 2;
-    /* place-self: center !important */
+}
+
+.loading {
+	text-align: center;
 }
 
 .title {
-	margin-left: auto !important;
+	text-align: center;
 }
-
-/* .cardContainer {
-	grid-area: body / 1 / body / 3;
-	display: flex;
-	flex-flow: row wrap
-} */
 
 .stars, .twinkling, .clouds {
 	position:absolute;
-	/* display:block; */
 	top:0; bottom:0;
 	left:0; right:0;
 	width:100%; height:100%;
