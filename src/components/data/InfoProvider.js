@@ -8,6 +8,7 @@ const InfoProvider = props => {
     const [ ships, setShips ] = useState([])
     const [ species, setSpecies ] = useState({})
 
+
     const getFilmData = (filmUrl) => {
         return fetch(filmUrl).then(film => film.json())}
 

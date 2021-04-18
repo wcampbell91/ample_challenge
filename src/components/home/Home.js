@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react"
 import { Container } from "react-bootstrap"
 
-import { infoContext } from "./InfoProvider"
+import { infoContext } from "../data/InfoProvider"
 import Search from "../search/Search"
 import CharacterCard from "../character/CharacterCards"
 import "./Home.css"

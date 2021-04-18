@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from "react"
-import { infoContext } from "../home/InfoProvider"
+import { infoContext } from "../data/InfoProvider"
 import "./SingleCharacter.css"
 import { Container, ListGroup, Button } from "react-bootstrap"
 
