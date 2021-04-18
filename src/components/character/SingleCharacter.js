@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from "react"
 import { infoContext } from "../home/InfoProvider"
 import "./SingleCharacter.css"
-import { Container, ListGroup } from "react-bootstrap"
+import { Container, ListGroup, Button } from "react-bootstrap"
 
 const SingleCharacter = props => {
     const { getSingleCharacter, films, ships, species } = useContext(infoContext)
@@ -18,10 +18,11 @@ const SingleCharacter = props => {
             setIsLoading(false)
         }
         updateCharacterState(charId)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const filmList =films && films.map((film) => <ListGroup.Item>{film.title}</ListGroup.Item>)
+
+    const filmList = films && films.map((film) => <ListGroup.Item>{film.title}</ListGroup.Item>)
 
     const shipList = ships && ships.map((ship) => <ListGroup.Item>{ship.name}</ListGroup.Item>)
     
@@ -29,6 +30,7 @@ const SingleCharacter = props => {
     return(
         <Container fluid className="stars singleCharContainer">
             <Container fluid className="twinkling name">
+                <Button className="homeButton" variant="warning" href="/">Home</Button>
                 {isLoading 
                 ? <h1>Loading...</h1>
                 : 

@@ -1,15 +1,21 @@
+
+
 .about_me {
     color: black;
-    background-color: transparent
+    background-color: transparent;
+	margin-top: 20px;
 }
 
+
 .films {
+	margin-top: 20px;
     grid-area: body / 2 / body / 2;
     color: black;
     background-color: transparent;
 }
 
 .starships {
+	margin-top: 20px;
 	grid-area: body / 2 / body / 2;
 	color: black;
 	background-color: transparent;

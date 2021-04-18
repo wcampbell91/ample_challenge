@@ -9,51 +9,48 @@ const InfoProvider = props => {
     const [ species, setSpecies ] = useState({})
 
     const getFilmData = (filmUrl) => {
-        return new Promise((resolve, reject) => fetch(filmUrl)
-        .then(film => film.json())
-        .then(film => {
-            resolve(film)
-        }).catch(reject)
-    )}
+        return fetch(filmUrl).then(film => film.json())}
 
     const getShipData = (shipUrl) => {
-        return new Promise((resolve, reject) => fetch(shipUrl)
-        .then(ship => ship.json())
-        .then(ship => {
-            resolve(ship)
-        }).catch(reject)
-    )}
+        return fetch(shipUrl).then(ship => ship.json())
+    }
 
     const getSpeciesData = (speciesUrl) => {
-        return new Promise((resolve, reject) => fetch(speciesUrl)
-        .then(species => species.json())
-        .then(species => resolve(species)).catch(reject)
-    )}
+        return fetch(speciesUrl).then(species => species.json())
+}
+
 
     const getSingleCharacter = (charId) => {
         return new Promise((resolve, reject) => fetch(`https://swapi.py4e.com/api/people/${charId}`)
         .then(res => {
             res.json().then(res => {
                 const filmList = []
-                if (res.films) {
-                    res.films.map((film) => {
+                const getFilms = async (res) => {
+                    return await res.films.map((film) => {
                         return getFilmData(film)
                         .then(film => filmList.push(film))
-                    })
-                }
-                const shipList = []
-                if(res.starships) {
-                    res.starships.map((ship) => {
-                        return getShipData(ship)
-                        .then(ship => shipList.push(ship))
-                    })
-                }
-                if (res.species) {
-                    getSpeciesData(res.species)
-                    .then(species => setSpecies(species))
-                }
+                })}
+                
+                getFilms(res)
                 setFilms(filmList)
+
+                const shipList = []
+                const getships = async (res) => {
+                    return await res.starships.map((ship) => {
+                            return getShipData(ship)
+                            .then(ship => shipList.push(ship))
+                })}
+                
+                getships(res)
                 setShips(shipList)
+                
+                
+                const getSpecies = async (res) => {
+                    return await getSpeciesData(res.species)
+                    .then(species => setSpecies(species)
+                )}
+                getSpecies(res)
+
                 resolve(res)
             }).catch(err => reject(err))
         })
@@ -72,35 +69,16 @@ const InfoProvider = props => {
                     }
                 }).catch(reject)
             }).catch(reject)
-            // .then(setCharacters(characterList)).catch(reject)
         )}
-
-    // const getCharacters = (progress, url = "https://swapi.py4e.com/api/people/", characterList = []) => {
-    //     return new Promise((resolve, reject) => fetch(url)
-    //     .then(response => {
-    //         if (response.status !== 200) {
-    //             throw `${response.status}: ${response.statusText}`;
-    //         }
-    //         response.json().then(res => {
-    //             characterList = characterList.push(res.results);
-
-    //             if (res.next) {
-    //                 // progress && progress(characterList);
-    //                 // setCharacters(characterList)
-    //                 getCharacters(progress, res.next, characterList).then(resolve).catch(reject)
-    //             } else {
-    //                 // setCharacters(characterList)
-    //                 resolve(characterList)
-    //             }
-    //         }).catch(reject)
-    //     }).catch(reject))
-    // }
 
     return (
         <infoContext.Provider value={{
-            character,
             getSingleCharacter,
             getCharacters,
+            getFilmData,
+            getShipData,
+            getSpeciesData,
+            character,
             films,
             ships,
             species

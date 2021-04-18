@@ -10,8 +10,12 @@
     grid-area: header / 2 / header / 2;
 }
 
+.loading {
+	text-align: center;
+}
+
 .title {
-	margin-left: auto !important;
+	text-align: center;
 }
 
 .stars, .twinkling, .clouds {
