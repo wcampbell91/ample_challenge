@@ -1,61 +1,62 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 
 export const infoContext = React.createContext()
 
 const InfoProvider = props => {
     const [ character, setCharacter ] = useState({})
-    const [ films, setFilms ] = useState([])
+    const [ characters, setCharacters ] = useState([])
+    const [ films, setFilms ] = useState()
     const [ ships, setShips ] = useState([])
     const [ species, setSpecies ] = useState({})
 
+    useEffect(() => {
+        getCharacters()
+        getFilms()
+        getShips()
+        getSpecies()
+    }, [])
+    
+    const getFilms = (filmList = [], url = "https://swapi.py4e.com/api/films") => {
+        return new Promise ((resolve, reject) => fetch(url)
+        .then(res => {
+            res.json().then(res => {
+                setFilms(res)
+                resolve(res)
+            }).catch(reject)
+        }).catch(reject)
+    )}
 
-    const getFilmData = (filmUrl) => {
-        return fetch(filmUrl).then(film => film.json())}
+    const getShips = (shipList = [], url = "https://swapi.py4e.com/api/starships") => {
+        return new Promise ((resolve, reject) => fetch(url)
+        .then(res => {
+            res.json().then(res => {
+                shipList = shipList.concat(res.results)
+                if(res.next) {
+                    getShips(shipList, res.next).then(resolve).catch(reject)
+                } else {
+                    shipList = shipList.concat(res.results)
+                    setShips(shipList)
+                    resolve(shipList)
+                }
+            }).catch(reject)
+        }).catch(reject)
+    )}
 
-    const getShipData = (shipUrl) => {
-        return fetch(shipUrl).then(ship => ship.json())
-    }
-
-    const getSpeciesData = (speciesUrl) => {
+    const getSpecies = (speciesUrl) => {
         return fetch(speciesUrl).then(species => species.json())
-}
+    }
 
 
     const getSingleCharacter = (charId) => {
         return new Promise((resolve, reject) => fetch(`https://swapi.py4e.com/api/people/${charId}`)
-        .then(res => {
-            res.json().then(res => {
-                const filmList = []
-                const getFilms = async (res) => {
-                    return await res.films.map((film) => {
-                        return getFilmData(film)
-                        .then(film => filmList.push(film))
-                })}
-                
-                getFilms(res)
-                setFilms(filmList)
-
-                const shipList = []
-                const getships = async (res) => {
-                    return await res.starships.map((ship) => {
-                            return getShipData(ship)
-                            .then(ship => shipList.push(ship))
-                })}
-                
-                getships(res)
-                setShips(shipList)
-                
-                
-                const getSpecies = async (res) => {
-                    return await getSpeciesData(res.species)
-                    .then(species => setSpecies(species)
-                )}
-                getSpecies(res)
-
-                resolve(res)
-            }).catch(err => reject(err))
-        })
-    )}
+            .then(res => res.json())
+            .then(res => {
+                getSpecies(res.species[0])
+                    .then(species => res.species = species)
+                    
+                resolve(res)}).catch(err => reject(err))
+        )
+    }
 
     const getCharacters = (characterList = [], url = "https://swapi.py4e.com/api/people/") => {
         return new Promise((resolve, reject) => fetch(url)
@@ -66,6 +67,7 @@ const InfoProvider = props => {
                         getCharacters(characterList, res.next).then(resolve).catch(reject)
                     } else {
                         characterList = characterList.concat(res.results)
+                        setCharacters(characterList)
                         resolve(characterList)
                     }
                 }).catch(reject)
@@ -76,10 +78,11 @@ const InfoProvider = props => {
         <infoContext.Provider value={{
             getSingleCharacter,
             getCharacters,
-            getFilmData,
-            getShipData,
-            getSpeciesData,
+            getFilms,
+            getShips,
+            getSpecies,
             character,
+            characters,
             films,
             ships,
             species

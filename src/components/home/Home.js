@@ -9,23 +9,11 @@ import "./Home.css"
 
 const Home = props => {
     const [ search, setSearch ] = useState('')
-    const [ characters, setCharacters ] = useState([])
+    // const [ characters, setCharacters ] = useState([])
     const [ isLoading, setIsLoading ] = useState(false)
-    const { getCharacters } = useContext(infoContext)
-
-    useEffect(() => {
-        const updateCharactersState = async () => {
-            setIsLoading(true)
-            const fetcher = await getCharacters()
-            setCharacters(fetcher)
-            setIsLoading(false)
-        }   
-        updateCharactersState()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    const { getCharacters, characters } = useContext(infoContext)
 
     const dynamicSearch = () => characters.filter((character) => character.name.toLowerCase().includes(search.toLowerCase()))
-
 
     return(
         <Container fluid className="stars">
