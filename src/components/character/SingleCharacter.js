@@ -1,23 +1,27 @@
 import React, { useEffect, useContext, useState } from "react"
 import Films from "../films/Films"
 import Ships from "../ships/Ships"
-import Species from "../species/Species"
 import { infoContext } from "../data/InfoProvider"
 import "./SingleCharacter.css"
 import { Container, ListGroup, Button } from "react-bootstrap"
 
 const SingleCharacter = props => {
-    const { getSingleCharacter, films, ships, species } = useContext(infoContext)
-    const [character, setCharacter ] = useState({})
+    const { getSingleCharacter, films, ships, species, character } = useContext(infoContext)
     const [ isLoading, setIsLoading ] = useState(false)
 
     const charId = props.match.params.characterId
 
     useEffect(() => {
-        getSingleCharacter(charId)
-        .then(res => setCharacter(res))
-    }, [])
+        const UpdateCharacterPage = async (charId) => {
+            setIsLoading(true)
+            return await getSingleCharacter(charId)
+        }
+        UpdateCharacterPage(charId)
+        setIsLoading(false)
 
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return(
         <Container fluid className="stars singleCharContainer">
@@ -35,23 +39,11 @@ const SingleCharacter = props => {
                             <ListGroup.Item>Weight: {character.mass}</ListGroup.Item>
                             <ListGroup.Item>Hair Color: {character.hair_color} </ListGroup.Item>
                             <ListGroup.Item>DOB: {character.birth_year}</ListGroup.Item>
-                            <ListGroup.Item>Species: {character.species && character.species.name}</ListGroup.Item>
+                            <ListGroup.Item>Species: {species && species.name}</ListGroup.Item>
                         </ListGroup>
                     </Container>
-                    <Films films={films} character={character} />
-                    <Ships ships={ships} character={character} />
-                    {/* <Container className="films">
-                        <h3>Films</h3>
-                        <ListGroup>
-                            {filmList}
-                        </ListGroup>
-                    </Container> */}
-                    {/* <Container className="starships">
-                        <h3>Starships flown</h3>
-                        <ListGroup>
-                            {shipList}
-                        </ListGroup>
-                    </Container> */}
+                    <Films key={character.id} films={films} character={character} />
+                    <Ships key={character.id} ships={ships} character={character} />
                 </div> 
                 }
             </Container>

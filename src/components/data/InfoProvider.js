@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react"
 
 export const infoContext = React.createContext()
@@ -13,7 +14,6 @@ const InfoProvider = props => {
         getCharacters()
         getFilms()
         getShips()
-        getSpecies()
     }, [])
     
     const getFilms = (filmList = [], url = "https://swapi.py4e.com/api/films") => {
@@ -42,18 +42,35 @@ const InfoProvider = props => {
         }).catch(reject)
     )}
 
-    const getSpecies = (speciesUrl) => {
-        return fetch(speciesUrl).then(species => species.json())
+    // const getSpecies = (speciesList = [], url="https://swapi.py4e.com/api/species") => {
+    //     return new Promise ((resolve, reject) => fetch(url)
+    //     .then(res => {
+    //         res.json().then(res => {
+    //             speciesList = speciesList.concat(res.results)
+    //             if(res.next) {
+    //                 getSpecies(speciesList, res.next).then(resolve).catch(reject)
+    //             } else {
+    //                 speciesList = speciesList.concat(res.results)
+    //                 setSpecies(speciesList)
+    //                 resolve(speciesList)
+    //             }
+    //         }).catch(reject)
+    //     }).catch(reject)
+    // )}
+
+    const getSpecies = (url) => {
+        return fetch(url).then(res => res.json())
     }
+
 
 
     const getSingleCharacter = (charId) => {
         return new Promise((resolve, reject) => fetch(`https://swapi.py4e.com/api/people/${charId}`)
             .then(res => res.json())
             .then(res => {
-                getSpecies(res.species[0])
-                    .then(species => res.species = species)
-                    
+                getSpecies(res.species)
+                .then(species => setSpecies(species))
+                setCharacter(res)
                 resolve(res)}).catch(err => reject(err))
         )
     }
@@ -80,12 +97,11 @@ const InfoProvider = props => {
             getCharacters,
             getFilms,
             getShips,
-            getSpecies,
             character,
             characters,
             films,
             ships,
-            species
+            species,
         }}>
             {props.children}
         </infoContext.Provider>
