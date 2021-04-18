@@ -42,8 +42,8 @@ const SingleCharacter = props => {
                             <ListGroup.Item>Species: {species && species.name}</ListGroup.Item>
                         </ListGroup>
                     </Container>
-                    <Films key={character.id} films={films} character={character} />
-                    <Ships key={character.id} ships={ships} character={character} />
+                    <Films films={films} character={character} />
+                    <Ships ships={ships} character={character} />
                 </div> 
                 }
             </Container>

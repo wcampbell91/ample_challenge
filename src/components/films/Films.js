@@ -11,7 +11,7 @@ const Films = props => {
 
     return(
             <Container className="films">
-                <h1>Films</h1>
+                <h3>Films</h3>
                 <ListGroup>
                     {filmItems}
                 </ListGroup>

@@ -12,12 +12,13 @@ const Ships = props => {
     const shipItems = newShipList && newShipList.map((ship) => <ListGroup.Item>{ship.name}: {ship.model}</ListGroup.Item>)
 
     return(
-            <Container className="ships">
-                <h1>ships</h1>
-                <ListGroup>
-                    {shipItems}
-                </ListGroup>
-            </Container>
+                <Container className="ships">
+                    <h3>ships</h3>
+                        <ListGroup>
+                            {shipItems}
+                        </ListGroup>
+                </Container>
+
     )
 }
 
